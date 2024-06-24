@@ -7,10 +7,10 @@ spring:
     gateway:
       mvc:
         routes:
-          - id: PaymentService
-            uri: lb://PaymentService
+          - id: payment_service
+            uri: lb://payment_service
             predicates:
-              - Path=/api/v1/user1/**
+              - Path=/api/v1/payment/**
           - id: TicketService
             uri: lb://TicketService
             predicates:
