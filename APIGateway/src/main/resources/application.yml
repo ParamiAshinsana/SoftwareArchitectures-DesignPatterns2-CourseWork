@@ -10,19 +10,19 @@ spring:
           - id: PaymentService
             uri: lb://PaymentService
             predicates:
-              - Path=/api/v1/user/**
+              - Path=/api/v1/user1/**
           - id: TicketService
             uri: lb://TicketService
             predicates:
-              - Path=/api/v1/item/**
+              - Path=/api/v1/item1/**
           - id: UserService
             uri: lb://UserService
             predicates:
-              - Path=/api/v1/user/**
+              - Path=/api/v1/user2/**
           - id: VehicleService
             uri: lb://VehicleService
             predicates:
-              - Path=/api/v1/item/**
+              - Path=/api/v1/item4/**
 eureka:
   client:
     register-with-eureka: true
