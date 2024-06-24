@@ -6,10 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="UserService" />
         <module name="ServiceRegistry" />
         <module name="TicketService" />
         <module name="ConfigurationService" />
-        <module name="UserService" />
+        <module name="APIGateway" />
         <module name="VehicleService" />
         <module name="PaymentService" />
       </profile>
@@ -20,6 +21,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="APIGateway" options="-parameters" />
       <module name="ConfigurationService" options="-parameters" />
       <module name="PaymentService" options="-parameters" />
       <module name="ServiceRegistry" options="-parameters" />
