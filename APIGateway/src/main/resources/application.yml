@@ -11,12 +11,12 @@ spring:
             uri: lb://payment-service
             predicates:
               - Path=/api/v1/payment/**
-          - id: ticket_service
-            uri: lb://ticket_service
+          - id: ticket-service
+            uri: lb://ticket-service
             predicates:
               - Path=/api/v1/ticket/**
-          - id: user_service
-            uri: lb://user_service
+          - id: user-service
+            uri: lb://user-service
             predicates:
               - Path=/api/v1/user/**
           - id: vehicle-service
