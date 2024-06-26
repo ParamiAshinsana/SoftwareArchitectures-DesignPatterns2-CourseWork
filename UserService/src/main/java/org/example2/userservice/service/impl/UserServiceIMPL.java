@@ -3,6 +3,7 @@ package org.example2.userservice.service.impl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example2.userservice.dto.UserDTO;
+import org.example2.userservice.entity.UserEntity;
 import org.example2.userservice.repository.UserDAO;
 import org.example2.userservice.service.UserService;
 import org.example2.userservice.util.UserMapping;
@@ -19,7 +20,10 @@ public class UserServiceIMPL implements UserService {
 
     @Override
     public UserDTO saveUser(UserDTO userDTO) {
-        return null;
+        UserEntity userEntity = userMapping.toUser(userDTO);
+
+        userEntity = userDAO.save(userEntity);
+        return userMapping.toUserDTO(userEntity);
     }
 
     @Override
