@@ -7,8 +7,8 @@ spring:
     gateway:
       mvc:
         routes:
-          - id: payment_service
-            uri: lb://payment_service
+          - id: payment-service
+            uri: lb://payment-service
             predicates:
               - Path=/api/v1/payment/**
           - id: ticket_service
@@ -19,8 +19,8 @@ spring:
             uri: lb://user_service
             predicates:
               - Path=/api/v1/user/**
-          - id: vehicle_service
-            uri: lb://vehicle_service
+          - id: vehicle-service
+            uri: lb://vehicle-service
             predicates:
               - Path=/api/v1/vehicle/**
 eureka:
