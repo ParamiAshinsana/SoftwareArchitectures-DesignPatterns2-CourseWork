@@ -2,7 +2,7 @@ server:
   port: 8082
 spring:
   application:
-    name: ticket_service
+    name: ticket-service
 eureka:
   client:
     register-with-eureka: true
