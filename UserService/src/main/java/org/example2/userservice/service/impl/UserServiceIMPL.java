@@ -11,6 +11,7 @@ import org.example2.userservice.util.UserMapping;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -35,7 +36,13 @@ public class UserServiceIMPL implements UserService {
 
     @Override
     public void updateUser(String id, UserDTO userDTO) {
-
+        Optional<UserEntity> tmpUser = userDAO.findById(id);
+        if(!tmpUser.isPresent()) throw new NotFoundException("User not found");
+        tmpUser.get().setUserName(userDTO.getUserName());
+        tmpUser.get().setUserDOB(userDTO.getUserDOB());
+        tmpUser.get().setUserGender(userDTO.getUserGender());
+        tmpUser.get().setUserAddress(userDTO.getUserAddress());
+        tmpUser.get().setUserContact(userDTO.getUserContact());
     }
 
     @Override
