@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class VehicleServiceDTO {
+public class VehicleDTO {
     private String vehicleRegistrationId;
     private String vehicleType;
     private String fuelType;
