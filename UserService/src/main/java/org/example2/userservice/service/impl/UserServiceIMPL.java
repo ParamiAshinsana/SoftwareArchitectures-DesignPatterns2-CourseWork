@@ -52,6 +52,7 @@ public class UserServiceIMPL implements UserService {
 
     @Override
     public UserDTO getSelectedUser(String id) {
-        return null;
+        if(!userDAO.existsById(id)) throw new NotFoundException("User not found");
+        return userMapping.toUserDTO(userDAO.getReferenceById(id));
     }
 }
