@@ -2,6 +2,8 @@ package org.example2.userservice.controller;
 import lombok.RequiredArgsConstructor;
 import org.example2.userservice.dto.UserDTO;
 import org.example2.userservice.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,5 +38,11 @@ public class UserServiceController {
     @GetMapping(value = "/getAllUsers")
     List<UserDTO> getAllUsers(){
         return userService.getAllUsers();
+    }
+
+    @GetMapping("/getSelectedUser/{id}")
+    ResponseEntity<UserDTO> getSelectedUser(@PathVariable ("id") String id){
+        UserDTO selectedUser = userService.getSelectedUser(id);
+        return selectedUser != null ? ResponseEntity.ok(selectedUser) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 }
