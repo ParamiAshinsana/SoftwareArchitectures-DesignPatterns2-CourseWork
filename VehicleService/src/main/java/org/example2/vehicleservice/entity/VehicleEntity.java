@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name = "vehicle")
-public class VehicleServiceEntity {
+public class VehicleEntity {
     @Id
     private String vehicleRegistrationId;
     private String vehicleType;
