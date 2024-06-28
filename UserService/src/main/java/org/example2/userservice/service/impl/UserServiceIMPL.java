@@ -47,7 +47,7 @@ public class UserServiceIMPL implements UserService {
 
     @Override
     public List<UserDTO> getAllUsers() {
-        return null;
+        return userMapping.toUserDTOList(userDAO.findAll());
     }
 
     @Override
