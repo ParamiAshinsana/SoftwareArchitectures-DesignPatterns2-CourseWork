@@ -19,4 +19,9 @@ public class UserServiceController {
     public UserDTO saveUser(@RequestBody UserDTO userDTO){
         return userService.saveUser(userDTO);
     }
+
+    @DeleteMapping(value = "/deleteUser/{id}")
+    public void deleteUser(@PathVariable ("id") String id){
+        userService.deleteUser(id);
+    }
 }
