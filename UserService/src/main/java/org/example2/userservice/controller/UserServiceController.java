@@ -4,6 +4,8 @@ import org.example2.userservice.dto.UserDTO;
 import org.example2.userservice.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/user")
@@ -29,5 +31,10 @@ public class UserServiceController {
     public void updateUser(@RequestBody UserDTO userDTO, @PathVariable ("id") String id){
         userService.updateUser(id,userDTO);
         System.out.println("User Updated!");
+    }
+
+    @GetMapping(value = "/getAllUsers")
+    List<UserDTO> getAllUsers(){
+        return userService.getAllUsers();
     }
 }
