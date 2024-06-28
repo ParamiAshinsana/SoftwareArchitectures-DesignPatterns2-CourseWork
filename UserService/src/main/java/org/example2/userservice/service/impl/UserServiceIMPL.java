@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example2.userservice.dto.UserDTO;
 import org.example2.userservice.entity.UserEntity;
+import org.example2.userservice.exception.NotFoundException;
 import org.example2.userservice.repository.UserDAO;
 import org.example2.userservice.service.UserService;
 import org.example2.userservice.util.UserMapping;
@@ -28,7 +29,8 @@ public class UserServiceIMPL implements UserService {
 
     @Override
     public void deleteUser(String id) {
-
+        if(!userDAO.existsById(id)) throw new NotFoundException("User not found");
+        userDAO.deleteById(id);
     }
 
     @Override
