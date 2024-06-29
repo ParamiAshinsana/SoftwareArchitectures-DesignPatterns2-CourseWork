@@ -59,6 +59,7 @@ public class VehicleServiceIMPL implements VehicleService {
         tmpVehicle.get().setNameOfOwner(vehicleDTO.getNameOfOwner());
         tmpVehicle.get().setAddressOfOwner(vehicleDTO.getAddressOfOwner());
         tmpVehicle.get().setRegisteredDate(vehicleDTO.getRegisteredDate());
+
     }
 
     @Override
