@@ -45,7 +45,8 @@ public class VehicleServiceIMPL implements VehicleService {
 
     @Override
     public void deleteVehicle(String id) {
-
+        if(!vehicleDAO.existsById(id)) throw new NotFoundException("Vehicle not found");
+        vehicleDAO.deleteById(id);
     }
 
     @Override
