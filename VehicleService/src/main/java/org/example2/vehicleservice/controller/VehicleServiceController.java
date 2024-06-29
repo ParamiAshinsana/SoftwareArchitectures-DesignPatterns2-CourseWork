@@ -26,4 +26,9 @@ public class VehicleServiceController {
         vehicleService.updateVehicle(id,vehicleDTO);
         System.out.println("User Updated!");
     }
+
+    @DeleteMapping(value = "/deleteVehicle/{id}")
+    public void deleteVehicle(@PathVariable ("id") String id){
+        vehicleService.deleteVehicle(id);
+    }
 }
