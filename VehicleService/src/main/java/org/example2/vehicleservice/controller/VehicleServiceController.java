@@ -1,16 +1,23 @@
 package org.example2.vehicleservice.controller;
 
+import lombok.RequiredArgsConstructor;
+import org.example2.vehicleservice.dto.VehicleDTO;
+import org.example2.vehicleservice.service.VehicleService;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/vehicle")
 public class VehicleServiceController {
+    private final VehicleService vehicleService;
 
-    @GetMapping("/userService")
+    @GetMapping("/vehicleService")
     public String getDetail(){
-        return "Hello";
+        return "Hello Vehicle";
+    }
+    @PostMapping(value = "/saveVehicle")
+    public VehicleDTO saveVehicle(@RequestBody VehicleDTO vehicleDTO){
+        return vehicleService.saveVehicle(vehicleDTO);
     }
 }
