@@ -10,8 +10,9 @@ import lombok.NoArgsConstructor;
 public class VehicleDTO {
     private String vehicleRegistrationId;
     private String vehicleType;
-//    private String fuelType;
-//    private String vehicleNo;
-//    private String nameOfOwner;
-//    private String addressOfOwner;
+    private String fuelType;
+    private String vehicleNo;
+    private String nameOfOwner;
+    private String addressOfOwner;
+    private String registeredDate;
 }
