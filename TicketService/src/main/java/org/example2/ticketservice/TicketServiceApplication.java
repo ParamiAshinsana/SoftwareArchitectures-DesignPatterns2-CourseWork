@@ -1,5 +1,6 @@
 package org.example2.ticketservice;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -17,5 +18,10 @@ public class TicketServiceApplication {
     @Bean
     public RestTemplate restTemplate(){
         return new RestTemplate();
+    }
+
+    @Bean
+    ModelMapper modelMapper(){
+        return new ModelMapper();
     }
 }
