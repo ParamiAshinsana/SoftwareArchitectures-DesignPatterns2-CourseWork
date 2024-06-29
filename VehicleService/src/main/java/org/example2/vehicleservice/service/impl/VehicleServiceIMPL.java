@@ -65,7 +65,7 @@ public class VehicleServiceIMPL implements VehicleService {
 
     @Override
     public List<VehicleDTO> getAllVehicles() {
-        return null;
+        return vehicleMapping.toVehicleDTOList(vehicleDAO.findAll());
     }
 
     @Override
