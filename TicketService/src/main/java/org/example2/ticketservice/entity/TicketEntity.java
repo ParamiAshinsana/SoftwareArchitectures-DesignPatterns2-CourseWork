@@ -14,4 +14,15 @@ import lombok.NoArgsConstructor;
 @Table(name = "ticket")
 public class TicketEntity {
     @Id
+    private String tellerId;
+    private String issuedDate;
+    private String issuedTime;
+    private String entranceIC;
+    private String exitIC;
+    private int vehicleType;
+    private String vehicleNo;
+    private String averageSpeed;
+    private String travelTime;
+    private double amount;
+    private String paymentStatus;
 }
