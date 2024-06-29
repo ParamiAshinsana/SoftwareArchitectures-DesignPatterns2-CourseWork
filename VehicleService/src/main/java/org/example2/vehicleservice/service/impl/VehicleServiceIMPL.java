@@ -23,8 +23,17 @@ public class VehicleServiceIMPL implements VehicleService {
 
     @Override
     public VehicleDTO saveVehicle(VehicleDTO vehicleDTO) {
-//         vehicleDTO.setVehicleRegistrationId(UUID.randomUUID().toString());
-//         return vehicleMapping.toVehicleDTO(vehicleDAO.save(vehicleMapping.toVehicle(vehicleDTO)));
+         vehicleDTO.setVehicleRegistrationId(UUID.randomUUID().toString());
+         return vehicleMapping.toVehicleDTO(vehicleDAO.save(vehicleMapping.toVehicle(vehicleDTO)));
+
+
+        // Check if the vehicleType and vehicleNo combination already exists
+//        if (vehicleDAO.existsByVehicleTypeAndVehicleNo(vehicleDTO.getVehicleType(), vehicleDTO.getVehicleNo())) {
+//            throw new IllegalArgumentException("A vehicle with the same type and number already exists");
+//        }
+//
+//        vehicleDTO.setVehicleRegistrationId(UUID.randomUUID().toString());
+//        return vehicleMapping.toVehicleDTO(vehicleDAO.save(vehicleMapping.toVehicle(vehicleDTO)));
     }
 
     @Override
