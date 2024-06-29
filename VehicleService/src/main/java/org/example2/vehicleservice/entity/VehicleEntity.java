@@ -9,14 +9,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "vehicle")
-//@Table(name = "vehicle", uniqueConstraints = {@UniqueConstraint(columnNames = {"vehicleType", "vehicleNo"})})
+//@Table(name = "vehicle")
+@Table(name = "vehicle", uniqueConstraints = {@UniqueConstraint(columnNames = {"vehicleType", "vehicleNo"})})
 public class VehicleEntity {
     @Id
     private String vehicleRegistrationId;
     private String vehicleType;
     private String fuelType;
-//    @Column(unique = false)
+    @Column(unique = false)
     private String vehicleNo;
     private String nameOfOwner;
     private String addressOfOwner;
