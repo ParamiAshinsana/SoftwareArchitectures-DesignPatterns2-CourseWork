@@ -20,4 +20,10 @@ public class VehicleServiceController {
     public VehicleDTO saveVehicle(@RequestBody VehicleDTO vehicleDTO){
         return vehicleService.saveVehicle(vehicleDTO);
     }
+
+    @PutMapping(value = "/updateVehicle/{id}")
+    public void updateVehicle(@RequestBody VehicleDTO vehicleDTO, @PathVariable ("id") String id){
+        vehicleService.updateVehicle(id,vehicleDTO);
+        System.out.println("User Updated!");
+    }
 }
