@@ -3,12 +3,15 @@ package org.example2.vehicleservice.service.impl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example2.vehicleservice.dto.VehicleDTO;
+import org.example2.vehicleservice.entity.VehicleEntity;
+import org.example2.vehicleservice.exception.NotFoundException;
 import org.example2.vehicleservice.repository.VehicleDAO;
 import org.example2.vehicleservice.service.VehicleService;
 import org.example2.vehicleservice.util.VehicleMapping;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -20,7 +23,7 @@ public class VehicleServiceIMPL implements VehicleService {
 
     @Override
     public VehicleDTO saveVehicle(VehicleDTO vehicleDTO) {
-        vehicleDTO.setVehicleRegistrationId(UUID.randomUUID().toString());
+         vehicleDTO.setVehicleRegistrationId(UUID.randomUUID().toString());
          return vehicleMapping.toVehicleDTO(vehicleDAO.save(vehicleMapping.toVehicle(vehicleDTO)));
     }
 
@@ -31,7 +34,15 @@ public class VehicleServiceIMPL implements VehicleService {
 
     @Override
     public void updateVehicle(String id, VehicleDTO vehicleDTO) {
+        Optional<VehicleEntity> tmpVehicle = vehicleDAO.findById(id);
+        if (!tmpVehicle.isPresent()) throw new NotFoundException("Vehicle not found");
 
+        tmpVehicle.get().setVehicleType(vehicleDTO.getVehicleType());
+        tmpVehicle.get().setFuelType(vehicleDTO.getFuelType());
+        tmpVehicle.get().setVehicleNo(vehicleDTO.getVehicleNo());
+        tmpVehicle.get().setNameOfOwner(vehicleDTO.getNameOfOwner());
+        tmpVehicle.get().setAddressOfOwner(vehicleDTO.getAddressOfOwner());
+        tmpVehicle.get().setRegisteredDate(vehicleDTO.getRegisteredDate());
     }
 
     @Override
