@@ -6,6 +6,8 @@ import org.example2.vehicleservice.service.VehicleService;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/vehicle")
@@ -30,5 +32,10 @@ public class VehicleServiceController {
     @DeleteMapping(value = "/deleteVehicle/{id}")
     public void deleteVehicle(@PathVariable ("id") String id){
         vehicleService.deleteVehicle(id);
+    }
+
+    @GetMapping(value = "/getAllVehicles")
+    List<VehicleDTO> getAllVehicles(){
+        return vehicleService.getAllVehicles();
     }
 }
