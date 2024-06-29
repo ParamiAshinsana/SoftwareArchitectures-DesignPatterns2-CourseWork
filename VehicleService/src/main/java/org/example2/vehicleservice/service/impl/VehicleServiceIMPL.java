@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example2.vehicleservice.dto.VehicleDTO;
 import org.example2.vehicleservice.entity.VehicleEntity;
+import org.example2.vehicleservice.exception.DuplicateVehicleException;
 import org.example2.vehicleservice.exception.NotFoundException;
 import org.example2.vehicleservice.repository.VehicleDAO;
 import org.example2.vehicleservice.service.VehicleService;
@@ -23,10 +24,16 @@ public class VehicleServiceIMPL implements VehicleService {
 
     @Override
     public VehicleDTO saveVehicle(VehicleDTO vehicleDTO) {
-         vehicleDTO.setVehicleRegistrationId(UUID.randomUUID().toString());
-         return vehicleMapping.toVehicleDTO(vehicleDAO.save(vehicleMapping.toVehicle(vehicleDTO)));
+//         vehicleDTO.setVehicleRegistrationId(UUID.randomUUID().toString());
+//         return vehicleMapping.toVehicleDTO(vehicleDAO.save(vehicleMapping.toVehicle(vehicleDTO)));
 
+// Check if the vehicleType and vehicleNo combination already exists
+        if (vehicleDAO.existsByVehicleTypeAndVehicleNo(vehicleDTO.getVehicleType(), vehicleDTO.getVehicleNo())) {
+            throw new DuplicateVehicleException("A vehicle with the same type and number already exists");
+        }
 
+        vehicleDTO.setVehicleRegistrationId(UUID.randomUUID().toString());
+        return vehicleMapping.toVehicleDTO(vehicleDAO.save(vehicleMapping.toVehicle(vehicleDTO)));
         // Check if the vehicleType and vehicleNo combination already exists
 //        if (vehicleDAO.existsByVehicleTypeAndVehicleNo(vehicleDTO.getVehicleType(), vehicleDTO.getVehicleNo())) {
 //            throw new IllegalArgumentException("A vehicle with the same type and number already exists");
