@@ -23,8 +23,8 @@ public class VehicleServiceIMPL implements VehicleService {
 
     @Override
     public VehicleDTO saveVehicle(VehicleDTO vehicleDTO) {
-         vehicleDTO.setVehicleRegistrationId(UUID.randomUUID().toString());
-         return vehicleMapping.toVehicleDTO(vehicleDAO.save(vehicleMapping.toVehicle(vehicleDTO)));
+//         vehicleDTO.setVehicleRegistrationId(UUID.randomUUID().toString());
+//         return vehicleMapping.toVehicleDTO(vehicleDAO.save(vehicleMapping.toVehicle(vehicleDTO)));
     }
 
     @Override
