@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.example2.vehicleservice.dto.VehicleDTO;
 import org.example2.vehicleservice.service.VehicleService;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,5 +39,11 @@ public class VehicleServiceController {
     @GetMapping(value = "/getAllVehicles")
     List<VehicleDTO> getAllVehicles(){
         return vehicleService.getAllVehicles();
+    }
+
+    @GetMapping("/getSelectedVehicle/{id}")
+    ResponseEntity<VehicleDTO> getSelectedVehicle(@PathVariable ("id") String id){
+        VehicleDTO selectedVehicle = vehicleService.getSelectedVehicle(id);
+        return selectedVehicle != null ? ResponseEntity.ok(selectedVehicle) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 }
