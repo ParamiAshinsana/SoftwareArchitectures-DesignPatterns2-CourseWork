@@ -14,4 +14,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "payment")
 public class PaymentEntity {
     @Id
+    private String paymentId;
+    private String description;
+    private String paymentMethod;
+    private double amount;
+    private String paymentStatus;
 }
