@@ -2,11 +2,38 @@ package org.example2.ticketservice.service.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.example2.ticketservice.dto.TicketDTO;
 import org.example2.ticketservice.service.TicketService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class TicketServiceIMPL implements TicketService {
+    @Override
+    public TicketDTO issueTicketAtEntrance(TicketDTO ticketDTO) {
+        return null;
+    }
+
+    @Override
+    public void deleteTicket(String id) {
+
+    }
+
+    @Override
+    public void issueTicketAtExit(String id, TicketDTO ticketDTO) {
+
+    }
+
+    @Override
+    public List<TicketDTO> getAllTicketDetails() {
+        return null;
+    }
+
+    @Override
+    public TicketDTO getSelectedTicketDetails(String id) {
+        return null;
+    }
 }
