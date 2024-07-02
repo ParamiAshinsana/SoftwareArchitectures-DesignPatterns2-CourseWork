@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example2.ticketservice.enumeration.PaymentStatus;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -14,8 +17,8 @@ import org.example2.ticketservice.enumeration.PaymentStatus;
 public class TicketEntity {
     @Id
     private String tellerId;
-    private String issuedDate;
-    private String issuedTime;
+    private LocalDate issuedDate;
+    private LocalTime issuedTime;
     private String entranceIC;
     private String exitIC;
     private int vehicleType;
