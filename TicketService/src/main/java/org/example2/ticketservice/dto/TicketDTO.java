@@ -3,6 +3,7 @@ package org.example2.ticketservice.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example2.ticketservice.enumeration.PaymentStatus;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,5 +19,5 @@ public class TicketDTO {
     private String averageSpeed;
     private String travelTime;
     private double amount;
-    private String paymentStatus;
+    private PaymentStatus paymentStatus;
 }
