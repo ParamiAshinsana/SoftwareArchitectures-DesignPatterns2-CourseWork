@@ -9,6 +9,9 @@ import org.example2.ticketservice.service.TicketService;
 import org.example2.ticketservice.util.TicketMapping;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -20,8 +23,17 @@ public class TicketServiceIMPL implements TicketService {
 
     @Override
     public TicketDTO issueTicketAtEntrance(TicketDTO ticketDTO) {
-        TicketEntity ticketEntity = ticketMapping.toTicket(ticketDTO);
+        // Assign current date if issuedDate is not provided
+        if (ticketDTO.getIssuedDate() == null) {
+            ticketDTO.setIssuedDate(LocalDate.now());
+        }
 
+        // Assign current time if issuedTime is not provided
+        if (ticketDTO.getIssuedTime() == null) {
+            ticketDTO.setIssuedTime(LocalTime.now());
+        }
+
+        TicketEntity ticketEntity = ticketMapping.toTicket(ticketDTO);
         ticketEntity = ticketDAO.save(ticketEntity);
         return ticketMapping.toTicketDTO(ticketEntity);
     }
