@@ -25,8 +25,8 @@ public class TicketServiceController {
         return restTemplate.getForObject("https://payment-service/api/v1/payment/paymentService", String.class);
     }
 
-    @PostMapping(value = "/saveUser")
-    public TicketDTO saveUser(@RequestBody TicketDTO ticketDTO){
-        return ticketService.saveUser(ticketDTO);
+    @PostMapping(value = "/issueTicketAtEntrance")
+    public TicketDTO issueTicketAtEntrance(@RequestBody TicketDTO ticketDTO){
+        return ticketService.issueTicketAtEntrance(ticketDTO);
     }
 }
