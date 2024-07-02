@@ -1,11 +1,10 @@
 package org.example2.ticketservice.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example2.ticketservice.enumeration.PaymentStatus;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,5 +23,6 @@ public class TicketEntity {
     private String averageSpeed;
     private String travelTime;
     private double amount;
-    private String paymentStatus;
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus paymentStatus;
 }
