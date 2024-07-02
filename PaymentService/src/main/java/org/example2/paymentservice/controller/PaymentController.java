@@ -11,6 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class PaymentController {
     @GetMapping("/paymentService")
     public String getDetail(){
-        return "Hello Payment";
+        return "Hello";
     }
 }
