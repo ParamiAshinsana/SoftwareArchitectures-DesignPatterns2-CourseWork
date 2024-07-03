@@ -14,7 +14,10 @@ import java.util.List;
 public class PaymentServiceIMPL implements PaymentService {
     @Override
     public PaymentDTO processThePayment(PaymentDTO paymentDTO) {
-        return null;
+        CustomerEntity customerEntity = customermapping.toCustomer(customerDTO);
+
+        customerEntity = customerDAO.save(customerEntity);
+        return customermapping.toCustomerDTO(customerEntity);
     }
 
     @Override
