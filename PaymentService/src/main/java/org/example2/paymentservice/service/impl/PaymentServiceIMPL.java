@@ -21,30 +21,28 @@ public class PaymentServiceIMPL implements PaymentService {
     private final PaymentMapping paymentMapping;
     @Override
     public PaymentDTO processThePayment(PaymentDTO paymentDTO) {
-        validatePaymentDTO(paymentDTO);
-
         PaymentEntity paymentEntity = paymentMapping.toPayment(paymentDTO);
         paymentEntity = paymentDAO.save(paymentEntity);
         return paymentMapping.toPaymentDTO(paymentEntity);
     }
 
-    private void validatePaymentDTO(PaymentDTO paymentDTO) {
-        if (!StringUtils.hasText(paymentDTO.getPaymentId())) {
-            throw new InvalidPaymentException("Payment ID cannot be empty");
-        }
-        if (!StringUtils.hasText(paymentDTO.getDescription())) {
-            throw new InvalidPaymentException("Description cannot be empty");
-        }
-        if (!StringUtils.hasText(paymentDTO.getPaymentMethod())) {
-            throw new InvalidPaymentException("Payment method cannot be empty");
-        }
-        if (paymentDTO.getAmount() <= 0) {
-            throw new InvalidPaymentException("Amount must be greater than 0");
-        }
-        if (paymentDTO.getPaymentStatus() == null) {
-            throw new InvalidPaymentException("Payment status cannot be null");
-        }
-    }
+//    private void validatePaymentDTO(PaymentDTO paymentDTO) {
+//        if (!StringUtils.hasText(paymentDTO.getPaymentId())) {
+//            throw new InvalidPaymentException("Payment ID cannot be empty");
+//        }
+//        if (!StringUtils.hasText(paymentDTO.getDescription())) {
+//            throw new InvalidPaymentException("Description cannot be empty");
+//        }
+//        if (!StringUtils.hasText(paymentDTO.getPaymentMethod())) {
+//            throw new InvalidPaymentException("Payment method cannot be empty");
+//        }
+//        if (paymentDTO.getAmount() <= 0) {
+//            throw new InvalidPaymentException("Amount must be greater than 0");
+//        }
+//        if (paymentDTO.getPaymentStatus() == null) {
+//            throw new InvalidPaymentException("Payment status cannot be null");
+//        }
+//    }
 
 
     @Override
