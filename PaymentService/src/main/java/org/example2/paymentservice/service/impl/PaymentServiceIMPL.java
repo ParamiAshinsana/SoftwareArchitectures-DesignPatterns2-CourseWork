@@ -29,19 +29,19 @@ public class PaymentServiceIMPL implements PaymentService {
 
     private void validatePaymentDTO(PaymentDTO paymentDTO) {
         if (!StringUtils.hasText(paymentDTO.getPaymentId())) {
-            throw new IllegalArgumentException("Payment ID cannot be empty");
+            throw new InvalidPaymentException("Payment ID cannot be empty");
         }
         if (!StringUtils.hasText(paymentDTO.getDescription())) {
-            throw new IllegalArgumentException("Description cannot be empty");
+            throw new InvalidPaymentException("Description cannot be empty");
         }
         if (!StringUtils.hasText(paymentDTO.getPaymentMethod())) {
-            throw new IllegalArgumentException("Payment method cannot be empty");
+            throw new InvalidPaymentException("Payment method cannot be empty");
         }
         if (paymentDTO.getAmount() <= 0) {
-            throw new IllegalArgumentException("Amount must be greater than 0");
+            throw new InvalidPaymentException("Amount must be greater than 0");
         }
         if (paymentDTO.getPaymentStatus() == null) {
-            throw new IllegalArgumentException("Payment status cannot be null");
+            throw new InvalidPaymentException("Payment status cannot be null");
         }
     }
 
