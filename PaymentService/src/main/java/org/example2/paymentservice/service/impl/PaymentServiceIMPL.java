@@ -19,8 +19,9 @@ public class PaymentServiceIMPL implements PaymentService {
     private final PaymentMapping paymentMapping;
     @Override
     public PaymentDTO processThePayment(PaymentDTO paymentDTO) {
-        PaymentEntity paymentEntity = paymentMapping.toPayment(paymentDTO);
+        validatePaymentDTO(paymentDTO);
 
+        PaymentEntity paymentEntity = paymentMapping.toPayment(paymentDTO);
         paymentEntity = paymentDAO.save(paymentEntity);
         return paymentMapping.toPaymentDTO(paymentEntity);
     }
