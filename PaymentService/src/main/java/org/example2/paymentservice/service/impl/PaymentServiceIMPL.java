@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example2.paymentservice.dto.PaymentDTO;
 import org.example2.paymentservice.entity.PaymentEntity;
+import org.example2.paymentservice.exception.InvalidPaymentException;
 import org.example2.paymentservice.repository.PaymentDAO;
 import org.example2.paymentservice.service.PaymentService;
 import org.example2.paymentservice.util.PaymentMapping;
