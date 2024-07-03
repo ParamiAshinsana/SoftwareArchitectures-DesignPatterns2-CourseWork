@@ -12,6 +12,9 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.example2.paymentservice.enumeration.PaymentStatus.PAID;
+import static org.example2.paymentservice.enumeration.PaymentStatus.PENDING;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/payment")
@@ -32,7 +35,7 @@ public class PaymentController {
 
     @PostMapping("/processThePayment")
     public ResponseEntity<?> processThePayment(@RequestBody PaymentDTO paymentDTO) {
-        List<String> errors = validatePaymentDTO(paymentDTO);
+        List<String> errors = validateEntrancePaymentDTO(paymentDTO);
 
         if (!errors.isEmpty()) {
             return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
@@ -42,7 +45,7 @@ public class PaymentController {
         return new ResponseEntity<>(savedPayment, HttpStatus.OK);
     }
 
-    private List<String> validatePaymentDTO(PaymentDTO paymentDTO) {
+    private List<String> validateEntrancePaymentDTO(PaymentDTO paymentDTO) {
         List<String> errors = new ArrayList<>();
 
         if (paymentDTO.getPaymentId() == null || paymentDTO.getPaymentId().isEmpty()) {
@@ -54,12 +57,12 @@ public class PaymentController {
         if (paymentDTO.getPaymentMethod() == null || paymentDTO.getPaymentMethod().isEmpty()) {
             errors.add("Payment method cannot be empty");
         }
-        if (paymentDTO.getAmount() <= 0) {
-            errors.add("Amount must be greater than 0");
+        if (paymentDTO.getAmount() != 0) {
+            errors.add("You can't make payments at Entrance , Pay only at Exit !");
         }
-        if (paymentDTO.getPaymentStatus() == null) {
-            errors.add("Payment status cannot be null");
-        }
+//        if (paymentDTO.getPaymentStatus() == PENDING) {
+//            errors.add("Your payment can only be completed at Exit !");
+//        }
 
         return errors;
     }
