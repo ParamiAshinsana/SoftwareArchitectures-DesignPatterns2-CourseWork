@@ -60,9 +60,9 @@ public class PaymentController {
         if (paymentDTO.getAmount() != 0) {
             errors.add("You can't make payments at Entrance , Pay only at Exit !");
         }
-//        if (paymentDTO.getPaymentStatus() == PENDING) {
-//            errors.add("Your payment can only be completed at Exit !");
-//        }
+        if (paymentDTO.getPaymentStatus() == null || paymentDTO.getPaymentStatus() != PENDING) {
+            errors.add("Payment status cannot be null and Your payment can only be completed at Exit !");
+        }
 
         return errors;
     }
