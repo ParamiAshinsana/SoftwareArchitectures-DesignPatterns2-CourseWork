@@ -9,7 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.example2.ticketservice.enumeration.PaymentStatus.PENDING;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,7 +39,7 @@ public class TicketServiceController {
 
     @PostMapping("/issueTicketAtEntrance")
     public ResponseEntity<?> issueTicketAtEntrance(@RequestBody TicketDTO ticketDTO) {
-        List<String> errors = validateEntrancePaymentDTO(ticketDTO);
+        List<String> errors = validateEntranceTicketIssuedDTO(ticketDTO);
 
         if (!errors.isEmpty()) {
             return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
@@ -44,5 +47,44 @@ public class TicketServiceController {
 
         TicketDTO savedPayment = ticketService.issueTicketAtEntrance(ticketDTO);
         return new ResponseEntity<>(savedPayment, HttpStatus.OK);
+    }
+
+
+    private List<String> validateEntranceTicketIssuedDTO(TicketDTO ticketDTO) {
+        List<String> errors = new ArrayList<>();
+
+        if (ticketDTO.getTellerId() == null || ticketDTO.getTellerId().isEmpty()) {
+            errors.add("Teller ID cannot be empty");
+        }
+        if (ticketDTO.getEntranceIC() == null || ticketDTO.getEntranceIC().isEmpty()) {
+            errors.add("EntranceIC cannot be empty");
+        }
+        if (ticketDTO.getExitIC() == null || ticketDTO.getExitIC().isEmpty()) {
+            errors.add("ExitIC cannot be empty");
+        } else if (!"TRAVELING".equals(ticketDTO.getExitIC())) {
+            errors.add("Incorrect information about the Exit!");
+        }
+        if (ticketDTO.getVehicleType() == 0) {
+            errors.add("Vehicle Type cannot be 0");
+        }
+        if (ticketDTO.getVehicleNo() == null || ticketDTO.getVehicleNo().isEmpty()) {
+            errors.add("Vehicle No cannot be empty !");
+        }
+        if (ticketDTO.getAverageSpeed() == null || ticketDTO.getAverageSpeed().isEmpty()) {
+            errors.add("Average Speed cannot be empty!");
+        }
+        if (ticketDTO.getTravelTime() == null || ticketDTO.getTravelTime().isEmpty()) {
+            errors.add("Travel Time information cannot be empty");
+        } else if (!"CALCULATING".equals(ticketDTO.getTravelTime())) {
+            errors.add("Incorrect information about the Travel Time!");
+        }
+        if (ticketDTO.getAmount() != 0) {
+            errors.add("You can't make payments at Entrance , Pay only at Exit !");
+        }
+        if (ticketDTO.getPaymentStatus() == null || ticketDTO.getPaymentStatus() != PENDING) {
+            errors.add("Payment status cannot be null and Your payment can only be completed at Exit !");
+        }
+
+        return errors;
     }
 }
