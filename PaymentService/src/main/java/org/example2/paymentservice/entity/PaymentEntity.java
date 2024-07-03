@@ -1,8 +1,6 @@
 package org.example2.paymentservice.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,5 +17,6 @@ public class PaymentEntity {
     private String description;
     private String paymentMethod;
     private double amount;
+    @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
 }
