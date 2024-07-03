@@ -8,6 +8,7 @@ import org.example2.paymentservice.repository.PaymentDAO;
 import org.example2.paymentservice.service.PaymentService;
 import org.example2.paymentservice.util.PaymentMapping;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -25,6 +26,25 @@ public class PaymentServiceIMPL implements PaymentService {
         paymentEntity = paymentDAO.save(paymentEntity);
         return paymentMapping.toPaymentDTO(paymentEntity);
     }
+
+    private void validatePaymentDTO(PaymentDTO paymentDTO) {
+        if (!StringUtils.hasText(paymentDTO.getPaymentId())) {
+            throw new IllegalArgumentException("Payment ID cannot be empty");
+        }
+        if (!StringUtils.hasText(paymentDTO.getDescription())) {
+            throw new IllegalArgumentException("Description cannot be empty");
+        }
+        if (!StringUtils.hasText(paymentDTO.getPaymentMethod())) {
+            throw new IllegalArgumentException("Payment method cannot be empty");
+        }
+        if (paymentDTO.getAmount() <= 0) {
+            throw new IllegalArgumentException("Amount must be greater than 0");
+        }
+        if (paymentDTO.getPaymentStatus() == null) {
+            throw new IllegalArgumentException("Payment status cannot be null");
+        }
+    }
+
 
     @Override
     public void deletePayment(String id) {
