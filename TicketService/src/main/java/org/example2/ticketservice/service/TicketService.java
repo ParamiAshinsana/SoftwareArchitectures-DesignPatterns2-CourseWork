@@ -10,4 +10,6 @@ public interface TicketService {
     void issueTicketAtExit(String id, TicketDTO ticketDTO);
     List<TicketDTO> getAllTicketDetails();
     TicketDTO getSelectedTicketDetails(String id);
+
+    boolean isValidEntranceIC(String id, String entranceIC);
 }
