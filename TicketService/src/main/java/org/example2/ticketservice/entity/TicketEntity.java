@@ -31,6 +31,10 @@ public class TicketEntity {
 //    @JoinColumn(name = "payment_Id",referencedColumnName = "paymentId")
     private PaymentEntity paymentId;
 
-    @ManyToOne
+//    @ManyToOne
+//    private VehicleEntity vehicleEntity;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "vehicleNo")
     private VehicleEntity vehicleEntity;
 }
