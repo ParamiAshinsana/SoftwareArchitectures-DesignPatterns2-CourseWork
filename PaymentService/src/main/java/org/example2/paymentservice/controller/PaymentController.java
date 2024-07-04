@@ -68,25 +68,25 @@ public class PaymentController {
     }
 
 
-    @PutMapping(value = "/updateVehicle/{id}")
-    public void updateVehicle(@RequestBody PaymentDTO paymentDTO, @PathVariable ("id") String id){
+    @PutMapping(value = "/modifyThePayment/{id}")
+    public void modifyThePayment(@RequestBody PaymentDTO paymentDTO, @PathVariable ("id") String id){
         paymentService.modifyThePayment(id,paymentDTO);
         System.out.println("Payment Updated!");
     }
 
     @DeleteMapping(value = "/deleteVehicle/{id}")
-    public void deleteVehicle(@PathVariable ("id") String id){
+    public void deletePayment(@PathVariable ("id") String id){
         paymentService.deletePayment(id);
     }
 
     @GetMapping(value = "/getAllVehicles")
-    List<PaymentDTO> getAllVehicles(){
+    List<PaymentDTO> getAllPaymentDetails(){
         return paymentService.getAllPaymentDetails();
     }
 
     @GetMapping("/getSelectedVehicle/{id}")
-    ResponseEntity<PaymentDTO> getSelectedVehicle(@PathVariable ("id") String id){
-        PaymentDTO selectedVehicle = paymentService.getSelectedPaymentDetails(id);
-        return selectedVehicle != null ? ResponseEntity.ok(selectedVehicle) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    ResponseEntity<PaymentDTO> getSelectedPaymentDetails(@PathVariable ("id") String id){
+        PaymentDTO selectedTicket = paymentService.getSelectedPaymentDetails(id);
+        return selectedTicket != null ? ResponseEntity.ok(selectedTicket) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 }
