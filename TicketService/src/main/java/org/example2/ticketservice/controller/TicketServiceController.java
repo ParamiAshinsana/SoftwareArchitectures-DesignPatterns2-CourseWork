@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static org.example2.ticketservice.enumeration.PaymentStatus.PAID;
 import static org.example2.ticketservice.enumeration.PaymentStatus.PENDING;
 
 @RestController
@@ -39,7 +40,7 @@ public class TicketServiceController {
 
     @PostMapping("/issueTicketAtEntrance")
     public ResponseEntity<?> issueTicketAtEntrance(@RequestBody TicketDTO ticketDTO) {
-        List<String> errors = validateEntranceTicketIssuedDTO(ticketDTO);
+        List<String> errors = validateEntranceTicketIssued(ticketDTO);
 
         if (!errors.isEmpty()) {
             return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
@@ -50,7 +51,7 @@ public class TicketServiceController {
     }
 
 
-    private List<String> validateEntranceTicketIssuedDTO(TicketDTO ticketDTO) {
+    private List<String> validateEntranceTicketIssued(TicketDTO ticketDTO) {
         List<String> errors = new ArrayList<>();
 
         if (ticketDTO.getTellerId() == null || ticketDTO.getTellerId().isEmpty()) {
@@ -94,11 +95,97 @@ public class TicketServiceController {
     }
 
 
+//    @PutMapping(value = "/issueTicketAtExit/{id}")
+//    public void issueTicketAtExit(@RequestBody TicketDTO ticketDTO, @PathVariable ("id") String id){
+//        ticketService.issueTicketAtExit(id,ticketDTO);
+//        System.out.println("User Updated!");
+//    }
+
     @PutMapping(value = "/issueTicketAtExit/{id}")
-    public void issueTicketAtExit(@RequestBody TicketDTO ticketDTO, @PathVariable ("id") String id){
-        ticketService.issueTicketAtExit(id,ticketDTO);
-        System.out.println("User Updated!");
+    public ResponseEntity<?> issueTicketAtExit(@RequestBody TicketDTO ticketDTO, @PathVariable("id") String id) {
+        List<String> errors = validateExitTicketIssued(ticketDTO);
+
+        if (!errors.isEmpty()) {
+            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        }
+
+        ticketService.issueTicketAtExit(id, ticketDTO);
+        return new ResponseEntity<>("Ticket Updated!", HttpStatus.OK);
     }
+
+    private List<String> validateExitTicketIssued(TicketDTO ticketDTO) {
+        List<String> errors = new ArrayList<>();
+
+        if (ticketDTO.getEntranceIC() == null || ticketDTO.getEntranceIC().isEmpty()) {
+            errors.add("EntranceIC cannot be empty");
+        }
+        if (ticketDTO.getExitIC() == null || ticketDTO.getExitIC().isEmpty()) {
+            errors.add("ExitIC cannot be empty");
+        }
+        if (ticketDTO.getVehicleType() == 0) {
+            errors.add("Vehicle Type cannot be 0");
+        }
+        if (ticketDTO.getVehicleNo() == null || ticketDTO.getVehicleNo().isEmpty()) {
+            errors.add("Vehicle No cannot be empty!");
+        }
+        if (ticketDTO.getAverageSpeed() == null || ticketDTO.getAverageSpeed().isEmpty()) {
+            errors.add("Average Speed cannot be empty!");
+        }
+        if (ticketDTO.getTravelTime() == null || ticketDTO.getTravelTime().isEmpty()) {
+            errors.add("Travel Time information cannot be empty");
+        }
+        if (ticketDTO.getAmount() == 0) {
+            errors.add("Amount should be greater than to zero for payment at Exit!");
+        }
+        if (ticketDTO.getPaymentStatus() == null || ticketDTO.getPaymentStatus() != PAID) {
+            errors.add("Exit is allowed only after Payment!");
+        }
+
+        return errors;
+    }
+
+//    @PutMapping(value = "/issueTicketAtExit/{id}")
+//    public ResponseEntity<?> issueTicketAtExit(@RequestBody TicketDTO ticketDTO, @PathVariable("id") String id) {
+//        List<String> errors = validateExitTicketIssued(ticketDTO);
+//
+//        if (!errors.isEmpty()) {
+//            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+//        }
+//
+//        ticketService.issueTicketAtExit(id, ticketDTO);
+//        return new ResponseEntity<>("Ticket Updated!", HttpStatus.OK);
+//    }
+//
+//    private List<String> validateExitTicketIssued(TicketDTO ticketDTO) {
+//        List<String> errors = new ArrayList<>();
+//
+//        if (ticketDTO.getEntranceIC() == null || ticketDTO.getEntranceIC().isEmpty()) {
+//            errors.add("EntranceIC cannot be empty");
+//        }
+//        if (ticketDTO.getExitIC() == null || ticketDTO.getExitIC().isEmpty()) {
+//            errors.add("ExitIC cannot be empty");
+//        }
+//        if (ticketDTO.getVehicleType() == 0) {
+//            errors.add("Vehicle Type cannot be 0");
+//        }
+//        if (ticketDTO.getVehicleNo() == null || ticketDTO.getVehicleNo().isEmpty()) {
+//            errors.add("Vehicle No cannot be empty !");
+//        }
+//        if (ticketDTO.getAverageSpeed() == null || ticketDTO.getAverageSpeed().isEmpty()) {
+//            errors.add("Average Speed cannot be empty!");
+//        }
+//        if (ticketDTO.getTravelTime() == null || ticketDTO.getTravelTime().isEmpty()) {
+//            errors.add("Travel Time information cannot be empty");
+//        }
+//        if (ticketDTO.getAmount() < 0) {
+//            errors.add("Amount should be greater than zero for payment at Exit!");
+//        }
+//        if (ticketDTO.getPaymentStatus() == null || ticketDTO.getPaymentStatus() == PAID) {
+//            errors.add("Exit is allowed only after payment!");
+//        }
+//
+//        return errors;
+//    }
 
     @DeleteMapping(value = "/deleteTicket/{id}")
     public void deleteTicket(@PathVariable ("id") String id){
