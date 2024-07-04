@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example2.ticketservice.dto.TicketDTO;
 import org.example2.ticketservice.entity.TicketEntity;
+import org.example2.ticketservice.exception.NotFoundException;
 import org.example2.ticketservice.repository.TicketDAO;
 import org.example2.ticketservice.service.TicketService;
 import org.example2.ticketservice.util.TicketMapping;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -40,21 +42,66 @@ public class TicketServiceIMPL implements TicketService {
 
     @Override
     public void deleteTicket(String id) {
-
+        if(!ticketDAO.existsById(id)) throw new NotFoundException("Ticket not found");
+        ticketDAO.deleteById(id);
     }
+
+    /**
+     *
+     *     private String tellerId;
+     *     private LocalDate issuedDate;
+     *     private LocalTime issuedTime;
+     *     private String entranceIC;
+     *     private String exitIC;
+     *     private int vehicleType;
+     *     private String vehicleNo;
+     *     private String averageSpeed;
+     *     private String travelTime;
+     *     private double amount;
+     *     @Enumerated(EnumType.STRING)
+     *     private PaymentStatus paymentStatus;
+     */
 
     @Override
     public void issueTicketAtExit(String id, TicketDTO ticketDTO) {
+        Optional<TicketEntity> tmpTicket = ticketDAO.findById(id);
+        if (!tmpTicket.isPresent()) throw new NotFoundException("Ticket not found");
 
+        TicketEntity ticketEntity = tmpTicket.get();
+
+        // Check and set issuedDate and issuedTime
+        if (ticketDTO.getIssuedDate() == null) {
+            ticketDTO.setIssuedDate(LocalDate.now());
+        }
+        if (ticketDTO.getIssuedTime() == null) {
+            ticketDTO.setIssuedTime(LocalTime.now());
+        }
+        ticketEntity.setIssuedDate(ticketDTO.getIssuedDate());
+        ticketEntity.setIssuedTime(ticketDTO.getIssuedTime());
+
+        // Update other fields
+        ticketEntity.setTellerId(ticketDTO.getTellerId());
+        ticketEntity.setEntranceIC(ticketDTO.getEntranceIC());
+        ticketEntity.setExitIC(ticketDTO.getExitIC());
+        ticketEntity.setVehicleType(ticketDTO.getVehicleType());
+        ticketEntity.setVehicleNo(ticketDTO.getVehicleNo());
+        ticketEntity.setAverageSpeed(ticketDTO.getAverageSpeed());
+        ticketEntity.setTravelTime(ticketDTO.getTravelTime());
+        ticketEntity.setAmount(ticketDTO.getAmount());
+        ticketEntity.setPaymentStatus(ticketDTO.getPaymentStatus());
+
+        // Save the updated ticket entity back to the database
+        ticketDAO.save(ticketEntity);
     }
 
     @Override
     public List<TicketDTO> getAllTicketDetails() {
-        return null;
+        return ticketMapping.toTicketDTOList(ticketDAO.findAll());
     }
 
     @Override
     public TicketDTO getSelectedTicketDetails(String id) {
-        return null;
+        if(!ticketDAO.existsById(id)) throw new NotFoundException("Ticket not found");
+        return ticketMapping.toTicketDTO(ticketDAO.getReferenceById(id));
     }
 }
