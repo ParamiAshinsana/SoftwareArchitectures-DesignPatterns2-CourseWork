@@ -94,8 +94,8 @@ public class TicketServiceController {
     }
 
 
-    @PutMapping(value = "/issueTicketAtEntrance/{id}")
-    public void issueTicketAtEntrance(@RequestBody TicketDTO ticketDTO, @PathVariable ("id") String id){
+    @PutMapping(value = "/issueTicketAtExit/{id}")
+    public void issueTicketAtExit(@RequestBody TicketDTO ticketDTO, @PathVariable ("id") String id){
         ticketService.issueTicketAtExit(id,ticketDTO);
         System.out.println("User Updated!");
     }
