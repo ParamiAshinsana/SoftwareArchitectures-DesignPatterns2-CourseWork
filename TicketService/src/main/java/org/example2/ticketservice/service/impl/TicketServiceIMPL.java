@@ -48,6 +48,35 @@ public class TicketServiceIMPL implements TicketService {
 
     @Override
     public void issueTicketAtExit(String id, TicketDTO ticketDTO) {
+//        Optional<TicketEntity> tmpTicket = ticketDAO.findById(id);
+//        if (!tmpTicket.isPresent()) throw new NotFoundException("Ticket not found");
+//
+//        TicketEntity ticketEntity = tmpTicket.get();
+//
+//        // Check and set issuedDate and issuedTime
+//        if (ticketDTO.getIssuedDate() == null) {
+//            ticketDTO.setIssuedDate(LocalDate.now());
+//        }
+//        if (ticketDTO.getIssuedTime() == null) {
+//            ticketDTO.setIssuedTime(LocalTime.now());
+//        }
+//        ticketEntity.setIssuedDate(ticketDTO.getIssuedDate());
+//        ticketEntity.setIssuedTime(ticketDTO.getIssuedTime());
+//
+//        // Update other fields
+//        ticketEntity.setTellerId(ticketDTO.getTellerId());
+//        ticketEntity.setEntranceIC(ticketDTO.getEntranceIC());
+//        ticketEntity.setExitIC(ticketDTO.getExitIC());
+//        ticketEntity.setVehicleType(ticketDTO.getVehicleType());
+//        ticketEntity.setVehicleNo(ticketDTO.getVehicleNo());
+//        ticketEntity.setAverageSpeed(ticketDTO.getAverageSpeed());
+//        ticketEntity.setTravelTime(ticketDTO.getTravelTime());
+//        ticketEntity.setAmount(ticketDTO.getAmount());
+//        ticketEntity.setPaymentStatus(ticketDTO.getPaymentStatus());
+//
+//        // Save the updated ticket entity back to the database
+//        ticketDAO.save(ticketEntity);
+
         Optional<TicketEntity> tmpTicket = ticketDAO.findById(id);
         if (!tmpTicket.isPresent()) throw new NotFoundException("Ticket not found");
 
@@ -63,8 +92,7 @@ public class TicketServiceIMPL implements TicketService {
         ticketEntity.setIssuedDate(ticketDTO.getIssuedDate());
         ticketEntity.setIssuedTime(ticketDTO.getIssuedTime());
 
-        // Update other fields
-        ticketEntity.setTellerId(ticketDTO.getTellerId());
+        // Update other fields except tellerId
         ticketEntity.setEntranceIC(ticketDTO.getEntranceIC());
         ticketEntity.setExitIC(ticketDTO.getExitIC());
         ticketEntity.setVehicleType(ticketDTO.getVehicleType());
@@ -77,6 +105,7 @@ public class TicketServiceIMPL implements TicketService {
         // Save the updated ticket entity back to the database
         ticketDAO.save(ticketEntity);
     }
+
 
     @Override
     public List<TicketDTO> getAllTicketDetails() {
