@@ -1,6 +1,7 @@
 package org.example2.paymentservice.service.impl;
 
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.example2.paymentservice.dto.PaymentDTO;
 import org.example2.paymentservice.entity.PaymentEntity;
@@ -48,31 +49,29 @@ public class PaymentServiceIMPL implements PaymentService {
 
     @Override
     public void deletePayment(String id) {
-        if(!vehicleDAO.existsById(id)) throw new NotFoundException("Vehicle not found");
-        vehicleDAO.deleteById(id);
+        if(!paymentDAO.existsById(id)) throw new NotFoundException("Vehicle not found");
+        paymentDAO.deleteById(id);
     }
 
     @Override
     public void modifyThePayment(String id, PaymentDTO paymentDTO) {
-        Optional<VehicleEntity> tmpVehicle = vehicleDAO.findById(id);
-        if (!tmpVehicle.isPresent()) throw new NotFoundException("Vehicle not found");
+        Optional<PaymentEntity> tmpTicket = paymentDAO.findById(id);
+        if (!tmpTicket.isPresent()) throw new NotFoundException("Ticket not found");
 
-        tmpVehicle.get().setVehicleType(vehicleDTO.getVehicleType());
-        tmpVehicle.get().setFuelType(vehicleDTO.getFuelType());
-        tmpVehicle.get().setVehicleNo(vehicleDTO.getVehicleNo());
-        tmpVehicle.get().setNameOfOwner(vehicleDTO.getNameOfOwner());
-        tmpVehicle.get().setAddressOfOwner(vehicleDTO.getAddressOfOwner());
-        tmpVehicle.get().setRegisteredDate(vehicleDTO.getRegisteredDate());
+        tmpTicket.get().setDescription(paymentDTO.getDescription());
+        tmpTicket.get().setPaymentMethod(paymentDTO.getPaymentMethod());
+        tmpTicket.get().setAmount(paymentDTO.getAmount());
+        tmpTicket.get().setPaymentStatus(paymentDTO.getPaymentStatus());
     }
 
     @Override
     public List<PaymentDTO> getAllPaymentDetails() {
-        return vehicleMapping.toVehicleDTOList(vehicleDAO.findAll());
+        return paymentMapping.toPaymentDTOList(paymentDAO.findAll());
     }
 
     @Override
     public PaymentDTO getSelectedPaymentDetails(String id) {
-        if(!vehicleDAO.existsById(id)) throw new NotFoundException("Vehicle not found");
-        return vehicleMapping.toVehicleDTO(vehicleDAO.getReferenceById(id));
+        if(!paymentDAO.existsById(id)) throw new NotFoundException("Payment not found");
+        return paymentMapping.toPaymentDTO(paymentDAO.getReferenceById(id));
     }
 }
