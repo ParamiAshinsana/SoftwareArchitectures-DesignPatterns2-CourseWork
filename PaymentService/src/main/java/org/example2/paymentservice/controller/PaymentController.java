@@ -69,24 +69,24 @@ public class PaymentController {
 
 
     @PutMapping(value = "/updateVehicle/{id}")
-    public void updateVehicle(@RequestBody VehicleDTO vehicleDTO, @PathVariable ("id") String id){
-        vehicleService.updateVehicle(id,vehicleDTO);
-        System.out.println("User Updated!");
+    public void updateVehicle(@RequestBody PaymentDTO paymentDTO, @PathVariable ("id") String id){
+        paymentService.modifyThePayment(id,paymentDTO);
+        System.out.println("Payment Updated!");
     }
 
     @DeleteMapping(value = "/deleteVehicle/{id}")
     public void deleteVehicle(@PathVariable ("id") String id){
-        vehicleService.deleteVehicle(id);
+        paymentService.deletePayment(id);
     }
 
     @GetMapping(value = "/getAllVehicles")
-    List<VehicleDTO> getAllVehicles(){
-        return vehicleService.getAllVehicles();
+    List<PaymentDTO> getAllVehicles(){
+        return paymentService.getAllPaymentDetails();
     }
 
     @GetMapping("/getSelectedVehicle/{id}")
-    ResponseEntity<VehicleDTO> getSelectedVehicle(@PathVariable ("id") String id){
-        VehicleDTO selectedVehicle = vehicleService.getSelectedVehicle(id);
+    ResponseEntity<PaymentDTO> getSelectedVehicle(@PathVariable ("id") String id){
+        PaymentDTO selectedVehicle = paymentService.getSelectedPaymentDetails(id);
         return selectedVehicle != null ? ResponseEntity.ok(selectedVehicle) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 }
