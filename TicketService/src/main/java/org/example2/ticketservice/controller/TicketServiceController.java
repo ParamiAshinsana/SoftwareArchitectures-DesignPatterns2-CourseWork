@@ -4,13 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.example2.ticketservice.dto.TicketDTO;
 import org.example2.ticketservice.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.example2.ticketservice.enumeration.PaymentStatus.PENDING;
 
@@ -86,5 +86,33 @@ public class TicketServiceController {
         }
 
         return errors;
+    }
+
+    @PostMapping("/entranceIssuedTicketPayment")
+    public String entranceProcessPaymentForTicket(){
+        return restTemplate.getForObject("https://payment-service/api/v1/payment/processThePayment", String.class);
+    }
+
+
+    @PutMapping(value = "/issueTicketAtEntrance/{id}")
+    public void issueTicketAtEntrance(@RequestBody TicketDTO ticketDTO, @PathVariable ("id") String id){
+        ticketService.issueTicketAtExit(id,ticketDTO);
+        System.out.println("User Updated!");
+    }
+
+    @DeleteMapping(value = "/deleteTicket/{id}")
+    public void deleteTicket(@PathVariable ("id") String id){
+        ticketService.deleteTicket(id);
+    }
+
+    @GetMapping(value = "/getAllTicketDetails")
+    List<TicketDTO> getAllTicketDetails(){
+        return ticketService.getAllTicketDetails();
+    }
+
+    @GetMapping("/getSelectedTicketDetails/{id}")
+    ResponseEntity<TicketDTO> getSelectedTicketDetails(@PathVariable ("id") String id){
+        TicketDTO selectedTicket = ticketService.getSelectedTicketDetails(id);
+        return selectedTicket != null ? ResponseEntity.ok(selectedTicket) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 }
