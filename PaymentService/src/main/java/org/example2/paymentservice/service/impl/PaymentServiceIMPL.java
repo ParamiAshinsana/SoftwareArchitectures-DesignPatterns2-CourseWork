@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -47,21 +48,31 @@ public class PaymentServiceIMPL implements PaymentService {
 
     @Override
     public void deletePayment(String id) {
-
+        if(!vehicleDAO.existsById(id)) throw new NotFoundException("Vehicle not found");
+        vehicleDAO.deleteById(id);
     }
 
     @Override
     public void modifyThePayment(String id, PaymentDTO paymentDTO) {
+        Optional<VehicleEntity> tmpVehicle = vehicleDAO.findById(id);
+        if (!tmpVehicle.isPresent()) throw new NotFoundException("Vehicle not found");
 
+        tmpVehicle.get().setVehicleType(vehicleDTO.getVehicleType());
+        tmpVehicle.get().setFuelType(vehicleDTO.getFuelType());
+        tmpVehicle.get().setVehicleNo(vehicleDTO.getVehicleNo());
+        tmpVehicle.get().setNameOfOwner(vehicleDTO.getNameOfOwner());
+        tmpVehicle.get().setAddressOfOwner(vehicleDTO.getAddressOfOwner());
+        tmpVehicle.get().setRegisteredDate(vehicleDTO.getRegisteredDate());
     }
 
     @Override
     public List<PaymentDTO> getAllPaymentDetails() {
-        return null;
+        return vehicleMapping.toVehicleDTOList(vehicleDAO.findAll());
     }
 
     @Override
     public PaymentDTO getSelectedPaymentDetails(String id) {
-        return null;
+        if(!vehicleDAO.existsById(id)) throw new NotFoundException("Vehicle not found");
+        return vehicleMapping.toVehicleDTO(vehicleDAO.getReferenceById(id));
     }
 }
