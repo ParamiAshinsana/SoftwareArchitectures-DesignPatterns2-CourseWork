@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example2.ticketservice.dto.TicketDTO;
 import org.example2.ticketservice.entity.TicketEntity;
+import org.example2.ticketservice.entity.VehicleEntity;
 import org.example2.ticketservice.exception.NotFoundException;
 import org.example2.ticketservice.repository.TicketDAO;
 import org.example2.ticketservice.service.TicketService;
@@ -23,6 +24,7 @@ public class TicketServiceIMPL implements TicketService {
     private final TicketDAO ticketDAO;
     private final TicketMapping ticketMapping;
 
+
     @Override
     public TicketDTO issueTicketAtEntrance(TicketDTO ticketDTO) {
         // Assign current date if issuedDate is not provided
@@ -38,6 +40,9 @@ public class TicketServiceIMPL implements TicketService {
         TicketEntity ticketEntity = ticketMapping.toTicket(ticketDTO);
         ticketEntity = ticketDAO.save(ticketEntity);
         return ticketMapping.toTicketDTO(ticketEntity);
+
+
+
     }
 
     @Override
