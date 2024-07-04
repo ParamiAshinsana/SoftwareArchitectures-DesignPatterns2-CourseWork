@@ -82,6 +82,11 @@ public class TicketServiceIMPL implements TicketService {
 
         TicketEntity ticketEntity = tmpTicket.get();
 
+        // Validate entranceIC
+        if (!ticketEntity.getEntranceIC().equals(ticketDTO.getEntranceIC())) {
+            throw new IllegalArgumentException("EntranceIC does not match the original record");
+        }
+
         // Check and set issuedDate and issuedTime
         if (ticketDTO.getIssuedDate() == null) {
             ticketDTO.setIssuedDate(LocalDate.now());
@@ -92,8 +97,7 @@ public class TicketServiceIMPL implements TicketService {
         ticketEntity.setIssuedDate(ticketDTO.getIssuedDate());
         ticketEntity.setIssuedTime(ticketDTO.getIssuedTime());
 
-        // Update other fields except tellerId
-        ticketEntity.setEntranceIC(ticketDTO.getEntranceIC());
+        // Update other fields except tellerId and entranceIC
         ticketEntity.setExitIC(ticketDTO.getExitIC());
         ticketEntity.setVehicleType(ticketDTO.getVehicleType());
         ticketEntity.setVehicleNo(ticketDTO.getVehicleNo());
@@ -116,5 +120,14 @@ public class TicketServiceIMPL implements TicketService {
     public TicketDTO getSelectedTicketDetails(String id) {
         if(!ticketDAO.existsById(id)) throw new NotFoundException("Ticket not found");
         return ticketMapping.toTicketDTO(ticketDAO.getReferenceById(id));
+    }
+
+    @Override
+    public boolean isValidEntranceIC(String id, String entranceIC) {
+        Optional<TicketEntity> tmpTicket = ticketDAO.findById(id);
+        if (!tmpTicket.isPresent()) throw new NotFoundException("Ticket not found");
+
+        TicketEntity ticketEntity = tmpTicket.get();
+        return ticketEntity.getEntranceIC().equals(entranceIC);
     }
 }
