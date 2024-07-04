@@ -1,13 +1,15 @@
 package org.example2.ticketservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 //@Table(name = "vehicle")
 @Table(name = "vehicle", uniqueConstraints = {@UniqueConstraint(columnNames = {"vehicleType", "vehicleNo"})})
@@ -21,4 +23,8 @@ public class VehicleEntity {
     private String nameOfOwner;
     private String addressOfOwner;
     private String registeredDate;
+
+    @OneToMany(mappedBy = "vehicleEntity", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<TicketEntity> ticketEntities ;
 }
