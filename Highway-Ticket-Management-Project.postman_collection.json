@@ -1,0 +1,688 @@
+{
+	"info": {
+		"_postman_id": "424aa7b8-ad91-49e8-8ff5-d4084ee06dc1",
+		"name": "Highway-Ticket-Management-Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30946379"
+	},
+	"item": [
+		{
+			"name": "VehicleService",
+			"item": [
+				{
+					"name": "VehicleRegistration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"vehicleType\": \"RENGE\",\r\n  \"fuelType\": \"Petrol\",\r\n  \"vehicleNo\": \"ABC1234\",\r\n  \"nameOfOwner\": \"John Doe\",\r\n  \"addressOfOwner\": \"123 Main St\",\r\n  \"registeredDate\": \"2024-01-01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/vehicle/saveVehicle",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"vehicle",
+								"saveVehicle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "VehicleUpdate",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"vehicleType\": \"RENGE\",\r\n  \"fuelType\": \"Petrol\",\r\n  \"vehicleNo\": \"ABC1234\",\r\n  \"nameOfOwner\": \"John Doe\",\r\n  \"addressOfOwner\": \"123 Main St\",\r\n  \"registeredDate\": \"2024-01-01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/vehicle/updateVehicle/6d926d2e-acb3-48f7-914b-cdaf6f1265a8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"vehicle",
+								"updateVehicle",
+								"6d926d2e-acb3-48f7-914b-cdaf6f1265a8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "VehicleDelete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/vehicle/deleteVehicle/6d926d2e-acb3-48f7-914b-cdaf6f1265a8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"vehicle",
+								"deleteVehicle",
+								"6d926d2e-acb3-48f7-914b-cdaf6f1265a8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllVehicles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/vehicle/getAllVehicles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"vehicle",
+								"getAllVehicles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetSelectedVehicle",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/vehicle/getSelectedVehicle/237795d9-ff15-4d08-ae5d-3e6d2b94ade6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"vehicle",
+								"getSelectedVehicle",
+								"237795d9-ff15-4d08-ae5d-3e6d2b94ade6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UserService",
+			"item": [
+				{
+					"name": "UserSave",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userId\": \"U006\",\r\n  \"userName\": \"Kamali Kasunka\",\r\n  \"userDOB\": \"1997-12-9\",\r\n  \"userGender\": \"Female\",\r\n  \"userAddress\": \"Ambalangoda\",\r\n  \"userContact\": \"0749566274\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/user/saveUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"saveUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserDelete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/user/deleteUser/U005",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"deleteUser",
+								"U005"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserUpdate",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\": \"Rebka AKasunka\",\r\n  \"userDOB\": \"1897-12-9\",\r\n  \"userGender\": \"Female\",\r\n  \"userAddress\": \"Ambalangoda\",\r\n  \"userContact\": \"0749566274\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/user/updateUser/U004",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"updateUser",
+								"U004"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllUsers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/user/getAllUsers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"getAllUsers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetSelectedUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/user/getSelectedUser/U001",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"getSelectedUser",
+								"U001"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TicketService",
+			"item": [
+				{
+					"name": "IssuanceOfTheTicketAtEntrance",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tellerId\": \"TIC006\",\r\n    \"entranceIC\": \"Walipanna\",\r\n    \"exitIC\": \"TRAVELING\",\r\n    \"vehicleType\": 4,\r\n    \"vehicleNo\": \"APY123\",\r\n    \"averageSpeed\": \"100 km/h\",\r\n    \"travelTime\": \"CALCULATING\",\r\n    \"amount\": 0.00,\r\n    \"paymentStatus\": \"PENDING\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/ticket/issueTicketAtEntrance",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"ticket",
+								"issueTicketAtEntrance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "IssuanceOfTheTicketAtExit",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"entranceIC\": \"Colombo\",\r\n    \"exitIC\": \"Dodangoda\",\r\n    \"vehicleType\": 4,\r\n    \"vehicleNo\": \"AB12345\",\r\n    \"averageSpeed\": \"60 km/h\",\r\n    \"travelTime\": \"1h:23m\",\r\n    \"amount\": 4500.00,\r\n    \"paymentStatus\": \"PAID\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/ticket/issueTicketAtExit/TIC001",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"ticket",
+								"issueTicketAtExit",
+								"TIC001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteTicket",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/ticket/deleteTicket/TIC002",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"ticket",
+								"deleteTicket",
+								"TIC002"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllTicketDetails",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/ticket/getAllTicketDetails",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"ticket",
+								"getAllTicketDetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetSelectedTicketDetails",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/ticket/getSelectedTicketDetails/TIC001",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"ticket",
+								"getSelectedTicketDetails",
+								"TIC001"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PaymentService",
+			"item": [
+				{
+					"name": "PayentProcess",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"paymentId\": \"P001\",\r\n  \"description\": \"Payment for order #54321\",\r\n  \"paymentMethod\": \"Card\",\r\n  \"amount\": 150.75,\r\n  \"paymentStatus\": \"PAID\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/payment/processThePayment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"payment",
+								"processThePayment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModifyThePayment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"description\": \"Payment for order #54321\",\r\n  \"paymentMethod\": \"Cash\",\r\n  \"amount\": 5200.00,\r\n  \"paymentStatus\": \"PAID\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/payment/modifyThePayment/P010",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"payment",
+								"modifyThePayment",
+								"P010"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeletePayment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/payment/deletePayment/P011",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"payment",
+								"deletePayment",
+								"P011"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllPaymentDetails",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/payment/getAllPaymentDetails",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"payment",
+								"getAllPaymentDetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetSelectedPaymentDetails",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/payment/getSelectedPaymentDetails/P010",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"payment",
+								"getSelectedPaymentDetails",
+								"P010"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MakingPaymentThroughTicketService",
+			"item": [
+				{
+					"name": "EntranceIssuedTicketPaymentSave",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"paymentId\": \"P001\",\r\n  \"description\": \"Payment for order #54321\",\r\n  \"paymentMethod\": \"Card\",\r\n  \"amount\": 150.75,\r\n  \"paymentStatus\": \"PAID\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/ticket/entranceIssuedTicketPayment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"ticket",
+								"entranceIssuedTicketPayment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExitIssuedTicketPaymentUpdate",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"description\": \"Payment for order #54321\",\r\n  \"paymentMethod\": \"Cash\",\r\n  \"amount\": 5200.00,\r\n  \"paymentStatus\": \"PAID\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/ticket/exitIssuedTicketPayment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"ticket",
+								"exitIssuedTicketPayment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteIssuedTicketPayment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/ticket/ideleteIssuedTicketPayment/P010",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"ticket",
+								"ideleteIssuedTicketPayment",
+								"P010"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllPaymentDetailsForTicket",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/ticket/getAllPaymentDetailsForTicket",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"ticket",
+								"getAllPaymentDetailsForTicket"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetSelectedPaymentDetailsForTicket",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/getSelectedPaymentDetailsForTicket/P010",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"getSelectedPaymentDetailsForTicket",
+								"P010"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
