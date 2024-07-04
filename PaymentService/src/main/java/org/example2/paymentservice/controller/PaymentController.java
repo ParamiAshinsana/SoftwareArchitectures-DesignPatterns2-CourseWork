@@ -66,4 +66,27 @@ public class PaymentController {
 
         return errors;
     }
+
+
+    @PutMapping(value = "/updateVehicle/{id}")
+    public void updateVehicle(@RequestBody VehicleDTO vehicleDTO, @PathVariable ("id") String id){
+        vehicleService.updateVehicle(id,vehicleDTO);
+        System.out.println("User Updated!");
+    }
+
+    @DeleteMapping(value = "/deleteVehicle/{id}")
+    public void deleteVehicle(@PathVariable ("id") String id){
+        vehicleService.deleteVehicle(id);
+    }
+
+    @GetMapping(value = "/getAllVehicles")
+    List<VehicleDTO> getAllVehicles(){
+        return vehicleService.getAllVehicles();
+    }
+
+    @GetMapping("/getSelectedVehicle/{id}")
+    ResponseEntity<VehicleDTO> getSelectedVehicle(@PathVariable ("id") String id){
+        VehicleDTO selectedVehicle = vehicleService.getSelectedVehicle(id);
+        return selectedVehicle != null ? ResponseEntity.ok(selectedVehicle) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
 }
