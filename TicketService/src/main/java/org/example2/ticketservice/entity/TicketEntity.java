@@ -1,9 +1,7 @@
 package org.example2.ticketservice.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.example2.ticketservice.enumeration.PaymentStatus;
 
 import java.time.LocalDate;
@@ -11,7 +9,8 @@ import java.time.LocalTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "ticket")
 public class TicketEntity {
@@ -28,4 +27,7 @@ public class TicketEntity {
     private double amount;
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
+
+    @ManyToOne
+    private VehicleEntity vehicleEntity;
 }
