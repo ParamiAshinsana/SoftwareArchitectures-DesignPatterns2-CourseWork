@@ -114,6 +114,7 @@ public class TicketServiceController {
         return new ResponseEntity<>("Ticket Updated!", HttpStatus.OK);
     }
 
+
     private List<String> validateExitTicketIssued(TicketDTO ticketDTO) {
         List<String> errors = new ArrayList<>();
 
