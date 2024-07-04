@@ -89,11 +89,6 @@ public class TicketServiceController {
         return errors;
     }
 
-    @PostMapping("/entranceIssuedTicketPayment")
-    public String entranceProcessPaymentForTicket(){
-        return restTemplate.getForObject("https://payment-service/api/v1/payment/processThePayment", String.class);
-    }
-
 
 //    @PutMapping(value = "/issueTicketAtExit/{id}")
 //    public void issueTicketAtExit(@RequestBody TicketDTO ticketDTO, @PathVariable ("id") String id){
@@ -208,4 +203,34 @@ public class TicketServiceController {
         TicketDTO selectedTicket = ticketService.getSelectedTicketDetails(id);
         return selectedTicket != null ? ResponseEntity.ok(selectedTicket) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
+
+
+    //Making Payment through Ticket Service
+
+    @PostMapping("/entranceIssuedTicketPayment")
+    public String entranceProcessPaymentForTicket(){
+        return restTemplate.getForObject("https://payment-service/api/v1/payment/processThePayment", String.class);
+    }
+
+    @PutMapping("/exitIssuedTicketPayment")
+    public String exitProcessPaymentForTicket(){
+        return restTemplate.getForObject("https://payment-service/api/v1/payment/modifyThePayment", String.class);
+    }
+
+    @DeleteMapping("/deleteIssuedTicketPayment")
+    public String deleteProcessPaymentForTicket(){
+        return restTemplate.getForObject("https://payment-service/api/v1/payment/deletePayment", String.class);
+    }
+
+    @GetMapping("/getAllPaymentDetailsForTicket")
+    public String getAllPaymentDetailsForTicket(){
+        return restTemplate.getForObject("https://payment-service/api/v1/payment/getAllPaymentDetails", String.class);
+    }
+
+    @GetMapping("/getSelectedPaymentDetailsForTicket")
+    public String getSelectedPaymentDetailsForTicket(){
+        return restTemplate.getForObject("https://payment-service/api/v1/payment/getSelectedPaymentDetails", String.class);
+    }
+
+
 }
