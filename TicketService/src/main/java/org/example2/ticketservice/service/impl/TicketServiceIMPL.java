@@ -46,22 +46,6 @@ public class TicketServiceIMPL implements TicketService {
         ticketDAO.deleteById(id);
     }
 
-    /**
-     *
-     *     private String tellerId;
-     *     private LocalDate issuedDate;
-     *     private LocalTime issuedTime;
-     *     private String entranceIC;
-     *     private String exitIC;
-     *     private int vehicleType;
-     *     private String vehicleNo;
-     *     private String averageSpeed;
-     *     private String travelTime;
-     *     private double amount;
-     *     @Enumerated(EnumType.STRING)
-     *     private PaymentStatus paymentStatus;
-     */
-
     @Override
     public void issueTicketAtExit(String id, TicketDTO ticketDTO) {
         Optional<TicketEntity> tmpTicket = ticketDAO.findById(id);
