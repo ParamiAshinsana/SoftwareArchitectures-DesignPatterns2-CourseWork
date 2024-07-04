@@ -74,17 +74,17 @@ public class PaymentController {
         System.out.println("Payment Updated!");
     }
 
-    @DeleteMapping(value = "/deleteVehicle/{id}")
+    @DeleteMapping(value = "/deletePayment/{id}")
     public void deletePayment(@PathVariable ("id") String id){
         paymentService.deletePayment(id);
     }
 
-    @GetMapping(value = "/getAllVehicles")
+    @GetMapping(value = "/getAllPaymentDetails")
     List<PaymentDTO> getAllPaymentDetails(){
         return paymentService.getAllPaymentDetails();
     }
 
-    @GetMapping("/getSelectedVehicle/{id}")
+    @GetMapping("/getSelectedPaymentDetails/{id}")
     ResponseEntity<PaymentDTO> getSelectedPaymentDetails(@PathVariable ("id") String id){
         PaymentDTO selectedTicket = paymentService.getSelectedPaymentDetails(id);
         return selectedTicket != null ? ResponseEntity.ok(selectedTicket) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
