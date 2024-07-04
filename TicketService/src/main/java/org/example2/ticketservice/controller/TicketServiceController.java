@@ -109,6 +109,12 @@ public class TicketServiceController {
             return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         }
 
+        boolean isValidEntranceIC = ticketService.isValidEntranceIC(id, ticketDTO.getEntranceIC());
+
+        if (!isValidEntranceIC) {
+            return new ResponseEntity<>("Invalid EntranceIC for the given tellerId", HttpStatus.BAD_REQUEST);
+        }
+
         ticketService.issueTicketAtExit(id, ticketDTO);
         return new ResponseEntity<>("Ticket Updated!", HttpStatus.OK);
     }
@@ -135,7 +141,7 @@ public class TicketServiceController {
             errors.add("Travel Time information cannot be empty");
         }
         if (ticketDTO.getAmount() == 0) {
-            errors.add("Amount should be greater than to zero for payment at Exit!");
+            errors.add("Amount should be greater than zero for payment at Exit!");
         }
         if (ticketDTO.getPaymentStatus() == null || ticketDTO.getPaymentStatus() != PAID) {
             errors.add("Exit is allowed only after Payment!");
