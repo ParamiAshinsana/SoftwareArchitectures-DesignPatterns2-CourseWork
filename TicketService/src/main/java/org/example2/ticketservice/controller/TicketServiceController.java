@@ -68,7 +68,7 @@ public class TicketServiceController {
         if (ticketDTO.getVehicleType() == 0) {
             errors.add("Vehicle Type cannot be 0");
         }
-        if (ticketDTO.getVehicleNo() == null || ticketDTO.getVehicleNo().isEmpty()) {
+        if (ticketDTO.getVehicleNo() == null) {
             errors.add("Vehicle No cannot be empty !");
         }
         if (ticketDTO.getAverageSpeed() == null || ticketDTO.getAverageSpeed().isEmpty()) {
@@ -126,7 +126,7 @@ public class TicketServiceController {
         if (ticketDTO.getVehicleType() == 0) {
             errors.add("Vehicle Type cannot be 0");
         }
-        if (ticketDTO.getVehicleNo() == null || ticketDTO.getVehicleNo().isEmpty()) {
+        if (ticketDTO.getVehicleNo() == null) {
             errors.add("Vehicle No cannot be empty!");
         }
         if (ticketDTO.getAverageSpeed() == null || ticketDTO.getAverageSpeed().isEmpty()) {
