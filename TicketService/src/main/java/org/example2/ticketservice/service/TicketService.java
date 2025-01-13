@@ -11,5 +11,9 @@ public interface TicketService {
     List<TicketDTO> getAllTicketDetails();
     TicketDTO getSelectedTicketDetails(String id);
 
+
     boolean isValidEntranceIC(String id, String entranceIC);
+    boolean isValidPaymentId(String id, String paymentID);
+    boolean isValidVehicleType(String id, String vehicleType);
+    boolean isValidVehicleNo(String id, String vehicleNo);
 }

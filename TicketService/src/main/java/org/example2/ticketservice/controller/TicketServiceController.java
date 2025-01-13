@@ -1,7 +1,9 @@
 package org.example2.ticketservice.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example2.ticketservice.dto.PaymentDTO;
 import org.example2.ticketservice.dto.TicketDTO;
+import org.example2.ticketservice.enumeration.PaymentStatus;
 import org.example2.ticketservice.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -38,18 +40,85 @@ public class TicketServiceController {
 //        return ticketService.issueTicketAtEntrance(ticketDTO);
 //    }
 
+//    @PostMapping("/issueTicketAtEntrance")
+//    public ResponseEntity<?> issueTicketAtEntrance(@RequestBody TicketDTO ticketDTO) {
+//        List<String> errors = validateEntranceTicketIssued(ticketDTO);
+//
+//        if (!errors.isEmpty()) {
+//            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+//        }
+//
+//        TicketDTO savedPayment = ticketService.issueTicketAtEntrance(ticketDTO);
+//        return new ResponseEntity<>(savedPayment, HttpStatus.OK);
+//    }
+//
+//
+//    private List<String> validateEntranceTicketIssued(TicketDTO ticketDTO) {
+//        List<String> errors = new ArrayList<>();
+//
+//        if (ticketDTO.getTellerId() == null || ticketDTO.getTellerId().isEmpty()) {
+//            errors.add("Teller ID cannot be empty");
+//        }
+//        if (ticketDTO.getEntranceIC() == null || ticketDTO.getEntranceIC().isEmpty()) {
+//            errors.add("EntranceIC cannot be empty");
+//        }
+//        if (ticketDTO.getExitIC() == null || ticketDTO.getExitIC().isEmpty()) {
+//            errors.add("ExitIC cannot be empty");
+//        } else if (!"TRAVELING".equals(ticketDTO.getExitIC())) {
+//            errors.add("Incorrect information about the Exit!");
+//        }
+//        if (ticketDTO.getVehicleType() == 0) {
+//            errors.add("Vehicle Type cannot be 0");
+//        }
+//        if (ticketDTO.getVehicleNo() == null) {
+//            errors.add("Vehicle No cannot be empty !");
+//        }
+//        if (ticketDTO.getAverageSpeed() == null || ticketDTO.getAverageSpeed().isEmpty()) {
+//            errors.add("Average Speed cannot be empty!");
+//        }
+//        if (ticketDTO.getTravelTime() == null || ticketDTO.getTravelTime().isEmpty()) {
+//            errors.add("Travel Time information cannot be empty");
+//        } else if (!"CALCULATING".equals(ticketDTO.getTravelTime())) {
+//            errors.add("Incorrect information about the Travel Time!");
+//        }
+//        if (ticketDTO.getAmount() != 0) {
+//            errors.add("You can't make payments at Entrance , Pay only at Exit !");
+//        }
+//        if (ticketDTO.getPaymentStatus() == null || ticketDTO.getPaymentStatus() != PENDING) {
+//            errors.add("Payment status cannot be null and Your payment can only be completed at Exit !");
+//        }
+//
+//        return errors;
+//    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @PostMapping("/issueTicketAtEntrance")
     public ResponseEntity<?> issueTicketAtEntrance(@RequestBody TicketDTO ticketDTO) {
         List<String> errors = validateEntranceTicketIssued(ticketDTO);
 
         if (!errors.isEmpty()) {
-            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+            String errorMessage = String.join(", ", errors);
+            return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
         }
 
-        TicketDTO savedPayment = ticketService.issueTicketAtEntrance(ticketDTO);
-        return new ResponseEntity<>(savedPayment, HttpStatus.OK);
+        TicketDTO savedTicket = ticketService.issueTicketAtEntrance(ticketDTO);
+        return new ResponseEntity<>(savedTicket, HttpStatus.OK);
     }
-
 
     private List<String> validateEntranceTicketIssued(TicketDTO ticketDTO) {
         List<String> errors = new ArrayList<>();
@@ -68,8 +137,8 @@ public class TicketServiceController {
         if (ticketDTO.getVehicleType() == 0) {
             errors.add("Vehicle Type cannot be 0");
         }
-        if (ticketDTO.getVehicleNo() == null) {
-            errors.add("Vehicle No cannot be empty !");
+        if (ticketDTO.getVehicleNo() == null || ticketDTO.getVehicleNo().isEmpty()) {
+            errors.add("Vehicle No cannot be empty!");
         }
         if (ticketDTO.getAverageSpeed() == null || ticketDTO.getAverageSpeed().isEmpty()) {
             errors.add("Average Speed cannot be empty!");
@@ -80,14 +149,42 @@ public class TicketServiceController {
             errors.add("Incorrect information about the Travel Time!");
         }
         if (ticketDTO.getAmount() != 0) {
-            errors.add("You can't make payments at Entrance , Pay only at Exit !");
+            errors.add("You can't make payments at Entrance, pay only at Exit!");
         }
-        if (ticketDTO.getPaymentStatus() == null || ticketDTO.getPaymentStatus() != PENDING) {
-            errors.add("Payment status cannot be null and Your payment can only be completed at Exit !");
+
+        if (ticketDTO.getPaymentId() == null || ticketDTO.getPaymentId().isEmpty()) { // Corrected condition
+            errors.add("Payment information is required and must include a valid payment ID.");
+        }
+        if (ticketDTO.getPaymentStatus() == null || ticketDTO.getPaymentStatus() != PaymentStatus.PENDING) {
+            errors.add("Payment status cannot be null and your payment can only be completed at Exit!");
         }
 
         return errors;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //    @PutMapping(value = "/issueTicketAtExit/{id}")
@@ -104,11 +201,42 @@ public class TicketServiceController {
             return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         }
 
+        // Checking the entrance at the exit
         boolean isValidEntranceIC = ticketService.isValidEntranceIC(id, ticketDTO.getEntranceIC());
 
         if (!isValidEntranceIC) {
             return new ResponseEntity<>("Invalid EntranceIC for the given tellerId", HttpStatus.BAD_REQUEST);
         }
+
+
+
+        // Checking the paymentID at the exit
+        boolean isValidPaymentId = ticketService.isValidPaymentId(id, ticketDTO.getPaymentId());
+
+        if (!isValidPaymentId) {
+            return new ResponseEntity<>("Invalid PaymentID", HttpStatus.BAD_REQUEST);
+        }
+
+        // Checking the vehicleType at the exit
+        boolean isValidVehicleType = ticketService.isValidVehicleType(id, String.valueOf(ticketDTO.getVehicleType()));
+
+        if (!isValidVehicleType) {
+            return new ResponseEntity<>("VehicleType does not match the original record", HttpStatus.BAD_REQUEST);
+        }
+
+
+        // Checking the vehicleNo at the exit
+        boolean isValidVehicleNo = ticketService.isValidVehicleNo(id, ticketDTO.getVehicleNo());
+
+        if (!isValidVehicleNo) {
+            return new ResponseEntity<>("VehicleNo does not match the original record", HttpStatus.BAD_REQUEST);
+        }
+
+
+
+
+
+
 
         ticketService.issueTicketAtExit(id, ticketDTO);
         return new ResponseEntity<>("Ticket Updated!", HttpStatus.OK);
@@ -138,6 +266,10 @@ public class TicketServiceController {
         }
         if (ticketDTO.getAmount() == 0) {
             errors.add("Amount should be greater than zero for payment at Exit!");
+
+        }
+        if (ticketDTO.getPaymentId() == null || ticketDTO.getPaymentId().isEmpty()) { // Corrected condition
+            errors.add("Payment information is required and must include a valid payment ID.");
         }
         if (ticketDTO.getPaymentStatus() == null || ticketDTO.getPaymentStatus() != PAID) {
             errors.add("Exit is allowed only after Payment!");
@@ -208,30 +340,54 @@ public class TicketServiceController {
 
     //Making Payment through Ticket Service
 
+//    @PostMapping("/entranceIssuedTicketPayment")
+//    public String entranceProcessPaymentForTicket(){
+//        return restTemplate.getForObject("https://payment-service/api/v1/payment/processThePayment", String.class);
+//    }
+
     @PostMapping("/entranceIssuedTicketPayment")
-    public String entranceProcessPaymentForTicket(){
-        return restTemplate.getForObject("https://payment-service/api/v1/payment/processThePayment", String.class);
+    public ResponseEntity<?> entranceProcessPaymentForTicket(@RequestBody PaymentDTO paymentDTO){
+        String url = "https://payment-service/api/v1/payment/processThePayment";
+        ResponseEntity<String> response = restTemplate.postForEntity(url, paymentDTO, String.class);
+        return new ResponseEntity<>(response.getBody(), response.getStatusCode());
     }
 
-    @PutMapping("/exitIssuedTicketPayment")
-    public String exitProcessPaymentForTicket(){
-        return restTemplate.getForObject("https://payment-service/api/v1/payment/modifyThePayment", String.class);
+
+//    @PutMapping("/exitIssuedTicketPayment")
+//    public String exitProcessPaymentForTicket(){
+//        return restTemplate.getForObject("https://payment-service/api/v1/payment/modifyThePayment", String.class);
+//    }
+
+    @PutMapping("/exitIssuedTicketPayment/{id}")
+    public ResponseEntity<?> exitProcessPaymentForTicket(@RequestBody PaymentDTO paymentDTO, @PathVariable("id") String id) {
+        String url = "https://payment-service/api/v1/payment/modifyThePayment/" + id;
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, new HttpEntity<>(paymentDTO), String.class);
+        return new ResponseEntity<>(response.getBody(), response.getStatusCode());
     }
 
-    @DeleteMapping("/deleteIssuedTicketPayment")
-    public String deleteProcessPaymentForTicket(){
-        return restTemplate.getForObject("https://payment-service/api/v1/payment/deletePayment", String.class);
+
+    @DeleteMapping("/deleteIssuedTicketPayment/{id}")
+    public ResponseEntity<?> deleteProcessPaymentForTicket(@PathVariable("id") String id) {
+        String url = "https://payment-service/api/v1/payment/deletePayment/" + id;
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.DELETE, null, String.class);
+        return new ResponseEntity<>(response.getBody(), response.getStatusCode());
     }
+
 
     @GetMapping("/getAllPaymentDetailsForTicket")
-    public String getAllPaymentDetailsForTicket(){
-        return restTemplate.getForObject("https://payment-service/api/v1/payment/getAllPaymentDetails", String.class);
+    public ResponseEntity<?> getAllPaymentDetailsForTicket() {
+        String url = "https://payment-service/api/v1/payment/getAllPaymentDetails";
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
+        return new ResponseEntity<>(response.getBody(), response.getStatusCode());
     }
 
-    @GetMapping("/getSelectedPaymentDetailsForTicket")
-    public String getSelectedPaymentDetailsForTicket(){
-        return restTemplate.getForObject("https://payment-service/api/v1/payment/getSelectedPaymentDetails", String.class);
+    @GetMapping("/getSelectedPaymentDetailsForTicket/{id}")
+    public ResponseEntity<String> getSelectedPaymentDetailsForTicket(@PathVariable("id") String id) {
+        String url = "https://payment-service/api/v1/payment/getSelectedPaymentDetails/" + id;
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
+        return new ResponseEntity<>(response.getBody(), response.getStatusCode());
     }
+
 
 
 }

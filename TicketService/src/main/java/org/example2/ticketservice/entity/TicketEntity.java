@@ -27,14 +27,11 @@ public class TicketEntity {
     private double amount;
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
-    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "payment_Id",referencedColumnName = "paymentId")
-    private PaymentEntity paymentId;
 
-//    @ManyToOne
-//    private VehicleEntity vehicleEntity;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "payment_Id")
+    private PaymentEntity paymentEntity;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "vehicleNo")
     private VehicleEntity vehicleEntity;
 }

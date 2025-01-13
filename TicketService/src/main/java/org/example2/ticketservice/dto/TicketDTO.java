@@ -23,4 +23,5 @@ public class TicketDTO {
     private String travelTime;
     private double amount;
     private PaymentStatus paymentStatus;
+    private String paymentId;
 }

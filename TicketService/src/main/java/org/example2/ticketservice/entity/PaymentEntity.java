@@ -19,4 +19,5 @@ public class PaymentEntity {
     private double amount;
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
+
 }

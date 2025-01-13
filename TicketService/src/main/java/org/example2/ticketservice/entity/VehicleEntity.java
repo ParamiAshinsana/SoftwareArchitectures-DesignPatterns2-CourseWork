@@ -11,8 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-//@Table(name = "vehicle")
-@Table(name = "vehicle", uniqueConstraints = {@UniqueConstraint(columnNames = {"vehicleType", "vehicleNo"})})
+@Table(name = "vehicle")
 public class VehicleEntity {
     @Id
     private String vehicleRegistrationId;
